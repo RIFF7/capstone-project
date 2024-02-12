@@ -36,8 +36,8 @@ st.title('Analisa Kasus Kejahatan Pada Negara US (Los Angeles)')
 stringHeader = 'Penulis : **Syarifudin Jaelani**'
 st.markdown(stringHeader)
 
-image = Image.open('dataset_caps/crime2.jpg')
-st.image(image, caption='', use_column_width=True)
+# image = Image.open('dataset_caps/crime2.jpg')
+# st.image(image, caption='', use_column_width=True)
 
 # ---------------------------------------------------------------
 
@@ -84,12 +84,87 @@ string1 = '''
          '''
 st.write(string1)
 
+# Tambahkan garis batas horizontal
+st.markdown("---")
+
 # ---------------------------------------------------------------
 
 # Menampilkan judul dengan fungsi st.title()
-st.title('Analisa Tren Waktu Kejahatan')
+st.title('Analisa Tren Waktu Kriminal')
+
+# Membuat Columns
+yearLpr_col, monthLpr_col = st.columns(2)
+
+yearOcc_col, monthOcc_col = st.columns(2)
+
+# ---------------------------------------------------------------
 
 # Import Dataset
-data_year = pd.read_csv('dataset_caps/yearly_report_count.csv')
+data_yearLpr = pd.read_csv('dataset_caps/yearLpr_report_count.csv')
+data_monthLpr = pd.read_csv('dataset_caps/monthLpr_report_count.csv')
+data_yearOcc = pd.read_csv('dataset_caps/yearOcc_report_count.csv')
+data_monthOcc = pd.read_csv('dataset_caps/monthOcc_report_count.csv')
+
+# ---------------------------------------------------------------
+
+with yearLpr_col:
+    # Buat plot menggunakan Altair
+    chart = alt.Chart(data_yearLpr).mark_line(point=True).encode(
+        x=alt.X('Year_Lpr:O', title='Tahun', axis=alt.Axis(labelAngle=0)),
+        y=alt.Y('Jml_Kejahatan:Q', title='Jumlah Laporan Kejahatan'),
+        tooltip=['Year_Lpr', 'Jml_Kejahatan']
+    ).properties(
+        width=600,
+        height=400,
+        title='Tren Jumlah Laporan Kriminal dari Tahun ke Tahun'
+    ).interactive()
+
+    # Tampilkan plot di aplikasi Streamlit
+    st.altair_chart(chart, use_container_width=True)
+
+with monthLpr_col:
+    # Buat plot menggunakan Altair
+    chart = alt.Chart(data_monthLpr).mark_line(point=True).encode(
+        x=alt.X('Month_Lpr:O', title='Bulan', axis=alt.Axis(labelAngle=0)),
+        y=alt.Y('Jml_Kejahatan:Q', title='Jumlah Laporan Kejahatan'),
+        tooltip=['Month_Lpr', 'Jml_Kejahatan']
+    ).properties(
+        width=600,
+        height=400,
+        title='Tren Jumlah Laporan Kriminal dari Bulan ke Bulan'
+    ).interactive()
+
+    # Tampilkan plot di aplikasi Streamlit
+    st.altair_chart(chart, use_container_width=True)
+
+with yearOcc_col:
+    # Buat plot menggunakan Altair
+    chart = alt.Chart(data_yearOcc).mark_line(point=True).encode(
+        x=alt.X('Year_Occ:O', title='Tahun', axis=alt.Axis(labelAngle=0)),
+        y=alt.Y('Jml_Kejahatan:Q', title='Jumlah Laporan Kejahatan'),
+        tooltip=['Year_Occ', 'Jml_Kejahatan']
+    ).properties(
+        width=600,
+        height=400,
+        title='Tren Jumlah Kejadian Kriminal dari Tahun ke Tahun'
+    ).interactive()
+
+    # Tampilkan plot di aplikasi Streamlit
+    st.altair_chart(chart, use_container_width=True)
+
+with monthOcc_col:
+    # Buat plot menggunakan Altair
+    chart = alt.Chart(data_monthOcc).mark_line(point=True).encode(
+        x=alt.X('Month_Occ:O', title='Bulan', axis=alt.Axis(labelAngle=0)),
+        y=alt.Y('Jml_Kejahatan:Q', title='Jumlah Laporan Kejahatan'),
+        tooltip=['Month_Occ', 'Jml_Kejahatan']
+    ).properties(
+        width=600,
+        height=400,
+        title='Tren Jumlah Kejadian Kriminal dari Bulan ke Bulan'
+    ).interactive()
+
+    # Tampilkan plot di aplikasi Streamlit
+    st.altair_chart(chart, use_container_width=True)
 
 # ---------------------------------------------------------------
