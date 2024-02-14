@@ -106,6 +106,8 @@ data_monthLpr = pd.read_csv('dataset_caps/monthLpr_report_count.csv')
 data_yearOcc = pd.read_csv('dataset_caps/yearOcc_report_count.csv')
 data_monthOcc = pd.read_csv('dataset_caps/monthOcc_report_count.csv')
 data_reportLpr = pd.read_csv('dataset_caps/reportLpr_count.csv')
+data_reportOcc = pd.read_csv('dataset_caps/reportOcc_count.csv')
+data_crime_day = pd.read_csv('dataset_caps/crime_by_day.csv')
 
 # ---------------------------------------------------------------
 
@@ -201,8 +203,11 @@ st.markdown("---")
 
 # ---------------------------------------------------------------
 
+# TREN JUMLAH PELAPORAN TINDAK KRIMINAL
+
 # Menampilkan judul dengan fungsi st.title()
 st.title('Analisa Tren Musiman Tindak Kriminal')
+st.markdown('### Tren Musiman Jumlah Pelaporan Tindak Kriminal')
 
 # Membuat Column Report
 reportLpr_col1, reportLpr_col2 = st.columns(2)
@@ -227,7 +232,7 @@ with reportLpr_col2:
     # Heatmap untuk Melihat Pola
     heatmap = alt.Chart(data_reportLpr).mark_rect().encode(
         x=alt.X('Month_Lpr:O', axis=alt.Axis(title='Bulan', labelAngle=0)),
-        y='Year_Lpr:O',
+        y=alt.Y('Year_Lpr:O', axis=alt.Axis(title='Tahun Laporan')),
         color='Jumlah Laporan:Q'
     ).properties(
         width=600,
@@ -293,14 +298,184 @@ with reportLpr_col3:
     year_selection = alt.selection_single(fields=['Year_Lpr'], bind=year_selected)
 
 with reportLpr_col4:
-    st.markdown('##### Analisa Tren Musiman Tindak Kriminal')
+    st.markdown('##### Analisa Tren Musiman Laporan Kriminal')
     string4 = '''
                 1. **Tren Menurun pada Tahun 2024**: Terdapat penurunan yang signifikan dalam jumlah laporan kejahatan pada tahun 2024, terutama pada bulan Januari, dibandingkan dengan tahun-tahun sebelumnya. Ini menunjukkan adanya perubahan yang mungkin signifikan dalam situasi keamanan atau perubahan dalam kebijakan penegakan hukum yang berdampak pada tingkat kejahatan.
                 
                 2. **Fluktuasi Tren Tahunan**: Secara umum, terlihat fluktuasi dalam jumlah laporan kejahatan dari bulan ke bulan dalam setiap tahun. Meskipun ada peningkatan dan penurunan yang terjadi dari bulan ke bulan, tetapi secara keseluruhan, trennya cenderung stabil atau menurun dari tahun ke tahun.
                 
                 3. **Pola Musiman**: Terlihat pola musiman dalam jumlah laporan kejahatan, dengan biasanya terjadi peningkatan selama beberapa bulan tertentu dalam setahun. Hal ini mungkin berkaitan dengan faktor-faktor musiman seperti liburan, cuaca, atau peristiwa-peristiwa khusus yang mempengaruhi tingkat kejahatan.
-                
-                Kesimpulan-konklusi ini memberikan gambaran yang komprehensif tentang situasi kejahatan berdasarkan data yang disediakan, serta menunjukkan potensi untuk penelitian dan tindakan lanjutan dalam rangka meningkatkan keamanan dan kesejahteraan masyarakat.
             '''
     st.write(string4)
+
+# TREN KEJADIAN TINDAK KRIMINAL 
+st.markdown('### Tren Musiman Jumlah Kejadian Tindak Kriminal')
+
+# Membuta Column Report
+reportOcc_col1, reportOcc_col2 = st.columns(2)
+reportOcc_col3, reportOcc_col4 = st.columns(2)
+
+with reportOcc_col1:
+    # Grafik Interaktif untuk Analisis Lebih Lanjut
+    interactive_chart2 = alt.Chart(data_reportOcc).mark_line().encode(
+        x=alt.X('Month_Occ:O', axis=alt.Axis(title='Bulan', labelAngle=0)),
+        y='Jumlah Kejadian:Q',
+        color='Year_Occ:N',
+        tooltip=['Year_Occ', 'Month_Occ', 'Jumlah Kejadian']
+    ).properties(
+        width=600,
+        height=400,
+        title='Tren Musiman Jumlah Kejadian Kriminal (Interaktif)'
+    ).interactive()
+    
+    interactive_chart2
+    
+with reportOcc_col2:
+    # Heatmap untuk Melihat Pola
+    heatmap2 = alt.Chart(data_reportOcc).mark_rect().encode(
+        x=alt.X('Month_Occ:O', axis=alt.Axis(title='Bulan', labelAngle=0)),
+        y=alt.Y('Year_Occ:O', axis=alt.Axis(title='Tahun Kejadian')),
+        color='Jumlah Kejadian:Q'
+    ).properties(
+        width=600,
+        height=400,
+        title='Heatmap Pola Musiman Jumlah Kejadian Kriminal'
+    )
+    
+    heatmap2
+
+with reportOcc_col3:
+    # Layout
+    st.markdown('##### Tren Jumlah Perbandingan Berdasarkan Tahun')
+
+    # Buat daftar tahun unik
+    tahun_unik2 = list(data_reportOcc['Year_Occ'].unique())
+
+    # Buat pilihan dropdown untuk tahun pertama
+    tahun_pertama2 = st.selectbox('Pilih Tahun Pertama:', tahun_unik2, key='tahun_pertama2')
+
+    # Buat pilihan dropdown untuk tahun kedua
+    tahun_kedua2 = st.selectbox('Pilih Tahun Kedua:', tahun_unik2, key='tahun_kedua2')
+
+    # Filter data berdasarkan tahun yang dipilih
+    data_reportOcc_filtered1 = data_reportOcc[data_reportOcc['Year_Occ'] == tahun_pertama2]
+    data_reportOcc_filtered2 = data_reportOcc[data_reportOcc['Year_Occ'] == tahun_kedua2]
+
+    # Buat plot dengan Altair untuk perbandingan antara tahun pertama dan tahun kedua
+    chart = alt.Chart(data_reportOcc_filtered1).mark_line().encode(
+        x=alt.X('Month_Occ', title='Bulan'),
+        y=alt.Y('Jumlah Kejadian'),
+        color=alt.value('blue'),
+        tooltip=['Year_Occ:N', 'Jumlah Kejadian:Q']  # Menambahkan tooltip untuk tahun dan jumlah kejahatan
+    ).properties(
+        width=600,
+        height=400
+    )
+
+    chart += alt.Chart(data_reportOcc_filtered2).mark_line().encode(
+        x=alt.X('Month_Occ', title='Bulan'),
+        y=alt.Y('Jumlah Kejadian'),
+        color=alt.value('red'),
+        tooltip=['Year_Occ:N', 'Jumlah Kejadian:Q']  # Menambahkan tooltip untuk tahun dan jumlah kejahatan
+    )
+
+    # Tambahkan titik pada setiap lekukan grafik
+    chart += alt.Chart(data_reportOcc_filtered1).mark_circle(color='blue').encode(
+        x=alt.X('Month_Occ', title='Bulan'),
+        y=alt.Y('Jumlah Kejadian'),
+        tooltip=['Year_Occ:N', 'Jumlah Kejadian:Q']  # Menambahkan tooltip untuk tahun
+    )
+
+    chart += alt.Chart(data_reportOcc_filtered2).mark_circle(color='red').encode(
+        x=alt.X('Month_Occ', title='Bulan'),
+        y=alt.Y('Jumlah Kejadian'),
+        tooltip=['Year_Occ:N', 'Jumlah Kejadian:Q']  # Menambahkan tooltip untuk tahun
+    )
+
+    # Tampilkan plot menggunakan Streamlit
+    st.altair_chart(chart, use_container_width=True)
+    
+    # Menggunakan widget bar Altair untuk memilih tahun
+    year_selected2 = alt.binding_select(options=sorted(data_reportOcc['Year_Occ'].unique()), name='Tahun  ')
+    year_selection2 = alt.selection_single(fields=['Year_Occ'], bind=year_selected2)
+
+with reportOcc_col4:
+    st.markdown('##### Analisa Tren Musiman Kejadian Kriminal')
+    string4 = '''
+                1. **Pola Musiman**: Terdapat pola musiman dalam jumlah kejadian tindak kriminal, dengan terjadinya fluktuasi yang berulang dari bulan ke bulan. Misalnya, terlihat peningkatan yang konsisten pada bulan Juli di setiap tahun, yang mungkin dapat dijelaskan oleh faktor-faktor seperti cuaca atau perubahan perilaku masyarakat selama musim liburan.
+                
+                2. **Tren Tahunan**: Meskipun terjadi fluktuasi bulanan, tren keseluruhan dari tahun ke tahun juga bisa diamati. Perhatikan bahwa jumlah kejadian tindak kriminal cenderung naik dari tahun 2020 hingga 2022, namun mengalami penurunan yang signifikan pada tahun 2024.
+                
+                3. **Perubahan Signifikan pada Tahun 2024**: Terdapat penurunan yang drastis dalam jumlah kejadian tindak kriminal pada tahun 2024. Ini bisa menjadi subjek penelitian lebih lanjut untuk memahami penyebabnya. Kemungkinan faktor yang berkontribusi meliputi peningkatan keamanan, perubahan sosial, atau kebijakan penegakan hukum yang baru, atau bisa jadi pada tahun baru di bulan baru ini tindak kejahatan masih minim terjadi.
+            '''
+    st.write(string4)
+
+# ---------------------------------------------------------------
+
+# KESIMPULAN TREN MUSIMAN
+stringInfo3 = '''
+                ### Kesimpulan Analisa Tren Musiman Tindak Kriminal
+                
+                - Terdapat tren penurunan jumlah laporan tindak kriminal dari tahun 2020 hingga 2024. Namun, untuk jumlah kejadian tindak kriminal, ada peningkatan dari tahun 2020 hingga 2022, kemudian diikuti dengan penurunan pada tahun 2024.
+                
+                - Baik data jumlah laporan maupun jumlah kejadian tindak kriminal menunjukkan adanya pola musiman. Misalnya, terdapat fluktuasi yang signifikan dari bulan ke bulan dalam jumlah laporan dan kejadian.
+                
+                - Terdapat perbedaan antara jumlah laporan dan jumlah kejadian tindak kriminal. Ini bisa disebabkan oleh beberapa faktor, seperti tingkat pelaporan yang berbeda, penanganan polisi, atau kebijakan pelaporan yang berubah.
+                
+                - Meskipun tren umum menunjukkan penurunan dari tahun ke tahun, perbedaan dalam tren tahunan antara jumlah laporan dan kejadian tindak kriminal menunjukkan kompleksitas dalam pola kejahatan yang mungkin memerlukan pendekatan yang berbeda dalam penanganan dan pencegahan.
+                
+                - Data ini menunjukkan tantangan yang dihadapi dalam memahami dan mengatasi kejahatan, tetapi juga menawarkan peluang untuk analisis lebih lanjut dan pengembangan strategi yang lebih efektif dalam penegakan hukum dan pencegahan kejahatan.
+            '''
+st.info(stringInfo3)
+
+st.markdown("---")
+
+# ---------------------------------------------------------------
+
+# Chart Kejadian Kejahatan Hari dalam Seminggu
+
+st.title('Tingkat Kejadian Kriminalitas per Hari')
+
+crimeDay_col1, crimeDay_col2 = st.columns(2)
+
+with crimeDay_col1:
+    string5 = '''
+                #### Analisa Kejadian Kejahatan Hari dalam Seminggu
+                
+                Berdasarkan hasil analisis data pada bar chart, berikut beberapa insight yang dapat ditarik:
+
+                1. Tren Kejahatan Mingguan
+                - Hari dengan Kejahatan Tertinggi:
+                    - Jumat: Memiliki jumlah kejahatan paling tinggi (98.546)\n
+                    - Sabtu: Memiliki jumlah kejahatan kedua tertinggi (96.889)\n
+                    - Minggu: Memiliki jumlah kejahatan ketiga tertinggi (92.478)\n
+                
+                - Hari dengan Kejahatan Terendah:
+                    - Selasa: Memiliki jumlah kejahatan paling rendah (89.434)
+                    
+                2. Pola Aktivitas Kejahatan
+
+                - **Peningkatan Kejahatan di Akhir Pekan**: Terjadi peningkatan signifikan pada jumlah kejahatan di hari Jumat, Sabtu, dan Minggu dibandingkan hari Senin dan Selasa. Hal ini menunjukkan kemungkinan korelasi antara aktivitas akhir pekan dan peningkatan peluang terjadinya kejahatan.
+                
+                - **Penurunan Kejahatan di Awal Pekan**: Jumlah kejahatan pada hari Senin dan Selasa relatif lebih rendah dibandingkan hari lain. Hal ini dapat dikaitkan dengan aktivitas masyarakat yang umumnya lebih fokus pada pekerjaan di awal pekan.
+            '''
+    st.write(string5)
+    
+with crimeDay_col2:
+    chart_day = alt.Chart(data_crime_day).mark_bar().encode(
+        x=alt.X('Hari:O', axis=alt.Axis(title='Hari', labelAngle=0)),
+        y=alt.Y('Jumlah Kejahatan:Q', title='Jumlah Kejahatan'),
+        tooltip=['Hari', 'Jumlah Kejahatan'],
+        color=alt.Color('Hari:O', scale=alt.Scale(type='ordinal', range=['#0072B2', '#E64A19', '#F9A825', '#79C75F', '#48A9A6', '#EBEB02', '#C75FB4']))
+    ).properties(
+        width=700,
+        height=600,
+        title='Jumlah Kriminalitas per Hari'
+    )
+
+    # Tampilkan chart
+    chart_day
+
+st.markdown("---")
+
+# ---------------------------------------------------------------
