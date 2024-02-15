@@ -71,17 +71,23 @@ stringInfoAuthor = '''
             '''
 st.sidebar.info(stringInfoAuthor)
 
-# Penjelasan Singkat Mengenai Tidak Kriminal
-string1 = '''
-         Dalam era digital yang terus berkembang, analisis data telah menjadi salah satu alat yang paling kuat dalam memahami dan mengatasi tantangan keamanan masyarakat. Dengan adanya akses terhadap dataset kriminalitas yang kaya informasi, kita dapat mengeksplorasi pola-pola yang tersembunyi dan mendapatkan wawasan yang berharga untuk meningkatkan efektivitas penegakan hukum serta keamanan masyarakat.\n
-         
-         Artikel ini mengusung tujuan untuk memberikan pandangan mendalam terhadap tren dan pola kriminal yang terjadi sejak tahun 2020 hingga saat ini. Dataset yang digunakan merupakan kumpulan data laporan tindak kriminal yang mencakup beragam informasi, mulai dari tanggal kejadian, lokasi, hingga deskripsi kejahatan. Analisis yang dilakukan tidak hanya sekedar mencari statistik umum, tetapi juga mencoba untuk melihat lebih jauh, mengidentifikasi pola yang mungkin tidak terlihat pada pandangan pertama.\n
-         
-         Melalui artikel ini, penulis akan memperkenalkan pembaca pada hasil analisis mendalam terhadap beberapa variabel kunci seperti nomor laporan, tanggal pelaporan, lokasi kejadian, jenis kejahatan, serta karakteristik korban dan status laporan. Semua informasi yang disajikan berdasarkan data aktual yang telah dipersiapkan dan diolah sebelumnya, memberikan keandalan dan keakuratan yang diperlukan dalam mengambil kesimpulan.\n
-         
-         Diharapkan artikel ini tidak hanya memberikan wawasan baru tentang kriminalitas / kejahatan yang terjadi di lingkungan kita, tetapi juga menjadi landasan untuk kebijakan dan langkah-langkah yang lebih efektif dalam mencegah dan menanggulangi tindak kriminal / kejahatan. Mari kita bersama-sama menjelajahi dunia tindak kriminalitas melalui lensa data, untuk menciptakan lingkungan yang lebih aman bagi kita semua.
-         '''
-st.write(string1)
+# GAMBAR
+col1, col2 = st.columns(2)
+
+with col1:
+    # Penjelasan Singkat Mengenai Tidak Kriminal
+    string1 = '''
+                Di era digital yang penuh teka-teki ini, data bagaikan kunci yang membuka gerbang pemahaman terhadap misteri kriminalitas. Melalui artikel ini, mari kita selami lautan data laporan kriminalitas sejak tahun 2020, menguak pola tersembunyi, dan menemukan jawaban atas pertanyaan-pertanyaan yang membingungkan. Berbekal dataset kaya informasi, kita akan menjelajahi lorong-lorong waktu, menguak tren dan pola kriminalitas yang tak terduga. Dari tanggal kejadian hingga lokasi, jenis kejahatan hingga karakteristik korban, data menjadi kompas yang menuntun kita dalam petualangan ini.\n
+
+                Lebih dari sekadar statistik, analisis mendalam akan membawa kita pada wawasan yang tak ternilai. Kita akan melihat melampaui permukaan, menemukan benang merah yang menghubungkan berbagai kejadian, dan menguak faktor-faktor yang berkontribusi pada maraknya kriminalitas. Namun, perjalanan ini bukan hanya tentang memahami, di akhir petualangan, kita akan menemukan solusi. Data menjadi peta yang menunjukkan jalan menuju penegakan hukum yang lebih efektif dan terciptanya lingkungan yang lebih aman bagi semua.\n
+
+                Mari kita bersama-sama membuka lembaran baru dalam memerangi kriminalitas. Bergabunglah dalam petualangan data ini, demi masa depan yang lebih damai dan terhindar dari rasa was-was.\n
+            '''
+    st.write(string1)
+
+with col2:
+    image = Image.open('dataset_caps/crime2.jpg')
+    st.image(image, caption='', use_column_width='auto')
 
 # Tambahkan garis batas horizontal
 st.markdown("---")
@@ -108,6 +114,7 @@ data_monthOcc = pd.read_csv('dataset_caps/monthOcc_report_count.csv')
 data_reportLpr = pd.read_csv('dataset_caps/reportLpr_count.csv')
 data_reportOcc = pd.read_csv('dataset_caps/reportOcc_count.csv')
 data_crime_day = pd.read_csv('dataset_caps/crime_by_day.csv')
+data_crime_count = pd.read_csv('dataset_caps/crime_count_sort.csv')
 
 # ---------------------------------------------------------------
 
@@ -175,26 +182,33 @@ with monthOcc_col:
 with analisa_col1:
     st.markdown('#### Analisa Tren Tahun Laporan dan Kejadian Kriminal')
     string2 = '''
-                1. **Trend Jumlah Tindak Kriminal dari Tahun ke Tahun**: Jumlah tindak kriminal cenderung mengalami penurunan dari tahun 2020 hingga 2024 baik dalam laporan maupun kejadian. Namun, terdapat penurunan yang signifikan dalam jumlah laporan tindak kriminal dari tahun 2023 ke 2024 sebesar **8752** kasus, sementara penurunan dalam jumlah kejadian tindak kriminal tidak sebesar itu hanya diangka **6973**.
+                1. **Trend**:
+                - Jumlah tindak kriminal (baik laporan maupun kejadian) menunjukkan tren penurunan dari tahun 2020 hingga 2024.
+                - Penurunan signifikan pada laporan (8752 kasus) dibandingkan kejadian (6973 kasus) terjadi di tahun 2024.
                 
-                2. **Perbandingan antara Laporan dan Kejadian Kriminalitas**: Meskipun terdapat fluktuasi tahunan dalam jumlah laporan dan kejadian kriminal, perbandingan antara jumlah laporan dan kejadian kriminal relatif stabil dari tahun ke tahun. Namun, pada tahun 2024, perbandingan ini menjadi lebih rendah, menunjukkan bahwa lebih sedikit tindak kriminal yang dilaporkan dibandingkan dengan tindak kriminal yang terjadi.
+                2. **Perbandingan Laporan dan Kejadian**:
+                - Perbandingan relatif stabil dari tahun ke tahun, tetapi lebih rendah di tahun 2024.
+                - Menunjukkan lebih sedikit tindak kriminal yang dilaporkan dibandingkan dengan yang terjadi.
                 
-                3. **Potensi Penurunan Kualitas Pelaporan**: Penurunan yang signifikan dalam jumlah laporan tindak kriminal pada tahun 2024, sementara jumlah kejadian kriminalitas tidak turun sebanyak itu, mungkin mengindikasikan adanya potensi penurunan kualitas pelaporan atau pelaporan yang kurang akurat pada tahun tersebut.
-                
-                4. **Faktor Penyebab Penurunan**: Penurunan jumlah laporan tindak kriminal dari tahun 2023 ke 2024 dapat disebabkan oleh berbagai faktor, seperti perubahan kebijakan pelaporan, peningkatan kesadaran masyarakat, atau perubahan dalam aktivitas tindak kriminal sebenarnya.
+                3. **Potensi Penurunan Kualitas Pelaporan**:
+                - Penurunan laporan di 2024, tanpa penurunan kejadian yang sebanding, mengindikasikan potensi penurunan kualitas pelaporan.
             '''
     st.write(string2)
 
 with analisa_col2:
     st.markdown('#### Analisa Tren Bulan Laporan dan Kejadian Kriminal')
     string3 = '''
-                1. **Trend Bulanan Jumlah Kriminalitas**: Berdasarkan grafik line diatas tidak ada fluktuasi yang signifikan dalam jumlah kriminalitas dari bulan ke bulan. Baik dalam laporan maupun kejadian tindak kriminal, jumlahnya cenderung relatif stabil dari bulan ke bulan.
+                1. **Trend**:
+                - Jumlah kriminalitas (baik laporan maupun kejadian) relatif stabil dari bulan ke bulan, tanpa fluktuasi signifikan.
+                - Polanya serupa: meningkat di awal tahun, mencapai puncak di pertengahan tahun, dan turun di akhir tahun.
                 
-                2. **Polanya Relatif Serupa**: Terdapat konsistensi dalam pola jumlah kejahatan antara bulan laporan dan bulan kejadian. Jumlah kejahatan cenderung meningkat pada awal tahun, mencapai puncaknya di pertengahan tahun, dan kemudian turun kembali menjelang akhir tahun.
+                2. **Perbedaan Kecil**:
+                - Terdapat perbedaan kecil dalam jumlah antara bulan laporan dan bulan kejadian, namun tidak signifikan
+                - Contoh: Penurunan pada bulan ke-8 di kedua grafik tidak terlalu signifikan.
                 
-                3. **Perbedaan dalam Jumlah Tertentu**: Meskipun polanya serupa, terdapat perbedaan kecil dalam jumlah tertentu antara bulan laporan dan bulan kejadian. Namun, perbedaan ini tidak signifikan dalam skala besar. Bisa dilihat dari grafik line laporan kriminal pada bulan ke-8 dan kejadian tindak kriminal dari bulan ke bulan pada bulan ke-8 juga, disana terdapat penurunan yang tidak terlalu signifikan.
-                
-                4. **Penurunan pada Akhir Tahun**: Terdapat penurunan yang konsisten dalam jumlah kejahatan pada bulan November dan Desember. Hal ini mungkin terkait dengan faktor-faktor seperti peningkatan keamanan menjelang liburan atau perubahan perilaku masyarakat selama musim liburan.
+                3. **Penurunan di Akhir Tahun**:
+                - Penurunan konsisten pada bulan November dan Desember.
+                - Kemungkinan terkait peningkatan keamanan menjelang liburan atau perubahan perilaku masyarakat.
             '''
     st.write(string3)
 
@@ -409,24 +423,16 @@ with reportOcc_col4:
                 3. **Perubahan Signifikan pada Tahun 2024**: Terdapat penurunan yang drastis dalam jumlah kejadian tindak kriminal pada tahun 2024. Ini bisa menjadi subjek penelitian lebih lanjut untuk memahami penyebabnya. Kemungkinan faktor yang berkontribusi meliputi peningkatan keamanan, perubahan sosial, atau kebijakan penegakan hukum yang baru, atau bisa jadi pada tahun baru di bulan baru ini tindak kejahatan masih minim terjadi.
             '''
     st.write(string4)
-
-# ---------------------------------------------------------------
-
-# KESIMPULAN TREN MUSIMAN
-stringInfo3 = '''
-                ### Kesimpulan Analisa Tren Musiman Tindak Kriminal
-                
-                - Terdapat tren penurunan jumlah laporan tindak kriminal dari tahun 2020 hingga 2024. Namun, untuk jumlah kejadian tindak kriminal, ada peningkatan dari tahun 2020 hingga 2022, kemudian diikuti dengan penurunan pada tahun 2024.
-                
-                - Baik data jumlah laporan maupun jumlah kejadian tindak kriminal menunjukkan adanya pola musiman. Misalnya, terdapat fluktuasi yang signifikan dari bulan ke bulan dalam jumlah laporan dan kejadian.
-                
-                - Terdapat perbedaan antara jumlah laporan dan jumlah kejadian tindak kriminal. Ini bisa disebabkan oleh beberapa faktor, seperti tingkat pelaporan yang berbeda, penanganan polisi, atau kebijakan pelaporan yang berubah.
-                
-                - Meskipun tren umum menunjukkan penurunan dari tahun ke tahun, perbedaan dalam tren tahunan antara jumlah laporan dan kejadian tindak kriminal menunjukkan kompleksitas dalam pola kejahatan yang mungkin memerlukan pendekatan yang berbeda dalam penanganan dan pencegahan.
-                
-                - Data ini menunjukkan tantangan yang dihadapi dalam memahami dan mengatasi kejahatan, tetapi juga menawarkan peluang untuk analisis lebih lanjut dan pengembangan strategi yang lebih efektif dalam penegakan hukum dan pencegahan kejahatan.
-            '''
-st.info(stringInfo3)
+    
+    # KESIMPULAN TREN MUSIMAN
+    stringInfo3 = '''
+                    ##### Kesimpulan Analisa Tren Musiman Tindak Kriminal
+                    
+                    Meskipun laporan tindak kriminal menunjukkan penurunan dari tahun 2020 hingga 2024, jumlah kejadiannya menunjukkan fluktuasi, dengan peningkatan di 2020-2022 dan penurunan di 2024. Perbedaan ini, serta pola musiman yang terlihat pada data, menunjukkan kompleksitas pola kejahatan.
+                    
+                    Tantangan dalam memahami dan mengatasi kejahatan masih ada, namun data ini juga menawarkan peluang untuk analisis lebih lanjut dan pengembangan strategi yang lebih efektif dalam penegakan hukum dan pencegahan. Upaya ini dapat dilakukan dengan meningkatkan kualitas pelaporan, memperkuat kerjasama masyarakat dan penegakan hukum, serta mengembangkan program pencegahan yang tepat sasaran.
+                '''
+    st.info(stringInfo3)
 
 st.markdown("---")
 
@@ -479,3 +485,58 @@ with crimeDay_col2:
 st.markdown("---")
 
 # ---------------------------------------------------------------
+
+st.title('Identifikasi 10 Tindak Kriminal Paling Umum')
+
+crimeCount_col1, crimeCount_col2 = st.columns(2)
+
+with crimeCount_col1:
+    string5 = '''
+                #### Analisa 10 Tindak Kriminal Paling Umum 
+                
+                **Kejahatan Paling Umum**:
+
+                - **Kekerasan**: Tiga kejahatan teratas terkait dengan kekerasan fisik, yaitu BATTERY - SIMPLE ASSAULT, ASSAULT WITH DEADLY WEAPON / AGGRAVATED ASSAULT, dan INTIMATE PARTNER - SIMPLE ASSAULT. Ini menunjukkan prevalensi yang mengkhawatirkan dari kekerasan di wilayah kejadian.
+                
+                - **Pencurian**: THEFT OF IDENTITY dan THEFT PLAIN - PETTY ($950 & UNDER) menempati peringkat kedua dan keempat, menyoroti masalah pencurian properti dan identitas.
+                
+                - **Kerusakan**: VANDALISM - FELONY ($400 & OVER, ALL CHURCH VA...) berada di peringkat ketujuh, menunjukkan tingkat vandalisme yang cukup tinggi.
+                
+                **Tren dan Pola**:
+
+                - **Kekerasan**: Adalah kategori dominan dengan jumlah kejadian hampir dua kali lipat dari kategori lainnya. Ini dapat menunjukkan masalah serius terkait kekerasan fisik dan memerlukan penelitian lebih lanjut.
+                
+                - **Pencurian**: Dua jenis pencurian masuk dalam lima besar, namun jarak jumlah kejadiannya dengan kategori kekerasan cukup jauh. Nmaun ini perlu dilihat lebih jauh apakah termasuk tren umum atau ada fluktuasi antar periode.
+                
+                - **Kerusakan**: Meskipun tidak seumum kategori lain, tingkat vandalisme yang cukup tinggi perlu perhatian juga untuk mengurangi tingkat kriminalitas dari poin ini.
+            '''
+    st.write(string5)
+    
+    # Implikasi
+    stringInfo4 = '''
+                **Implikasi**:
+
+                - Fokus penegakan hukum mungkin perlu diprioritaskan pada pencegahan dan penanganan kejahatan kekerasan.
+                - Upaya peningkatan kesadaran masyarakat tentang keamanan digital dan perlindungan identitas mungkin diperlukan untuk mengurangi pencurian identitas.
+                - Program dan inisiatif untuk mencegah perusakan properti perlu dipertimbangkan.
+                '''
+    st.info(stringInfo4)
+
+with crimeCount_col2:
+    # Bar Chart Data Tindak Kejahatan
+    bar_chart = alt.Chart(data_crime_count.head(10)).mark_bar().encode(
+        x='Jumlah',
+        y=alt.Y('Deskripsi Kejahatan').sort('-x'),
+        color=alt.value('#0072B2'),
+    ).properties(
+        width=700,
+        height=500,
+        title='10 Jenis Kejahatan Paling Umum'
+    )
+
+    bar_chart
+
+st.markdown("---")
+
+# ---------------------------------------------------------------
+
