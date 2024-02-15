@@ -117,6 +117,7 @@ data_crime_day = pd.read_csv('dataset_caps/crime_by_day.csv')
 data_crime_count = pd.read_csv('dataset_caps/crime_count_sort.csv')
 data_crime_area = pd.read_csv('dataset_caps/crime_by_area.csv')
 data_crime_lokasi = pd.read_csv('dataset_caps/crime_by_location.csv')
+data_gender = pd.read_csv('dataset_caps/gender_counts.csv')
 
 # ---------------------------------------------------------------
 
@@ -536,7 +537,20 @@ with crimeCount_col2:
     )
 
     bar_chart
-
+    
+    chart_gender = alt.Chart(data_gender).mark_bar().encode(
+        x=alt.X('JenisKelKor:O', axis=alt.Axis(title='Jenis Kelamin', labelAngle=0)),
+        y=alt.Y('Jml_Total:Q', title='Total'),
+        tooltip=['JenisKelKor', 'Jml_Total'],
+        color=alt.Color('JenisKelKor:O', scale=alt.Scale(type='ordinal', range=['#0072B2', '#E64A19']))
+    ).properties(
+        width=600,
+        height=400,
+        title='Banyak Gender Korban'
+    )
+    
+    chart_gender
+    
 st.markdown("---")
 
 # ---------------------------------------------------------------
@@ -571,7 +585,7 @@ with crimeArea_col1:
     
     # Analisa Lainnya
     stringInfo5 = '''
-                **Insight Lainnya Mungkin Dapat Ditambahkan**:
+                **Analisa Lainnya Mungkin Dapat Ditambahkan**:
 
                 - **Jenis Kejahatan Dominan**: Analisis jenis kejahatan di area dan lokasi tertentu dapat memberikan informasi tentang fokus penegakan hukum dan pencegahan.
                 
@@ -621,3 +635,8 @@ with crimeArea_col2:
 
     # Tampilkan bar chart
     bar_chart2
+
+st.markdown("---")
+
+# ---------------------------------------------------------------
+
