@@ -640,3 +640,63 @@ st.markdown("---")
 
 # ---------------------------------------------------------------
 
+st.title('Kesimpulan dari Analisa Data Kriminalitas')
+
+conclusion1, conclusion2 = st.columns(2)
+
+with conclusion1:
+    # KESIMPULAN
+    stringInfo6 = '''
+                    ##### Tren Kriminalitas
+
+                    - **Penurunan**: Terjadi penurunan tren kriminalitas (baik laporan maupun kejadian) dari tahun 2020 hingga 2024.
+                    
+                    - **Perbedaan Laporan dan Kejadian**: Lebih sedikit tindak kriminal yang dilaporkan dibandingkan dengan yang terjadi, menunjukkan potensi penurunan kualitas pelaporan.
+                    
+                    - **Stabilitas Bulanan**: Jumlah kriminalitas relatif stabil dari bulan ke bulan tanpa fluktuasi signifikan.
+                    
+                    - **Penurunan di Akhir Tahun**: Penurunan konsisten pada bulan November dan Desember.
+                    
+                    - **Pola Musiman**: Terlihat pola musiman dalam jumlah laporan dan kejadian, dengan peningkatan di awal tahun, puncak di pertengahan tahun, dan turun di akhir tahun.
+                    
+                    - **Penurunan Signifikan di 2024**: Penurunan signifikan dalam jumlah laporan dan kejadian di tahun 2024, terutama pada bulan Januari.
+                    
+                    ##### Tingkat Kejadian
+
+                    - **Hari dengan Kejahatan Tertinggi**: Jumat, Sabtu, dan Minggu.
+                    
+                    - **Hari dengan Kejahatan Terendah**: Selasa.
+                    
+                    - **Peningkatan di Akhir Pekan**: Peningkatan signifikan pada jumlah kejahatan di akhir pekan.
+                    
+                    - **Penurunan di Awal Pekan**: Jumlah kejahatan pada hari Senin dan Selasa relatif lebih rendah.
+                    '''
+    st.info(stringInfo6)
+
+with conclusion2:
+    stringInfo7 = '''
+                    ##### 10 Tindak Kriminal Paling Umum
+
+                    - **Kekerasan**: Dominan dengan jumlah kejadian hampir dua kali lipat dari kategori lainnya.
+                    
+                    - **Pencurian**: Dua jenis pencurian masuk dalam lima besar.
+                    
+                    - **Kerusakan**: Tingkat vandalisme cukup tinggi.
+                    
+                    ##### Implikasi
+
+                    - Fokus pada pencegahan dan penanganan kejahatan kekerasan.
+                    
+                    - Meningkatkan kesadaran masyarakat tentang keamanan digital dan perlindungan identitas.
+                    
+                    - Mencegah perusakan properti.
+                    
+                    ##### Area dan Lokasi Kejadian
+
+                    - **Konsentrasi**: Mayoritas area dengan tingkat kriminalitas tinggi terkonsentrasi di Central, Southwest, dan Hollywood.
+                    
+                    - **Lokasi Berulang**: Beberapa lokasi muncul beberapa kali dalam daftar 10 lokasi dengan kejadian terbanyak.
+                    
+                    - **Perbandingan**: Perbedaan antar area menunjukkan disparitas tingkat keamanan.
+                    '''
+    st.info(stringInfo7)
