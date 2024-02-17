@@ -54,7 +54,7 @@ stringInfo1 = '''
 st.sidebar.info(stringInfo1)
 
 stringInfo2 = '''
-            **Penjelasan Mengenai Dataset Tindak Kejahatan**
+            **Penjelasan Mengenai Dataset Tindak Kriminal**
             
             Kumpulan data ini mencerminkan insiden kejahatan di Kota Los Angeles sejak tahun 2020 hingga saat ini. Data ini ditranskrip dari laporan kejahatan asli yang diketik di atas kertas dan oleh karena itu mungkin ada beberapa ketidakakuratan dalam data. Beberapa bidang lokasi dengan data yang hilang dicatat sebagai (0°, 0°). Kolom alamat hanya disediakan hingga seratus blok terdekat untuk menjaga privasi. Data ini seakurat data yang ada di database.
             '''
@@ -698,5 +698,7 @@ with conclusion2:
                     - **Lokasi Berulang**: Beberapa lokasi muncul beberapa kali dalam daftar 10 lokasi dengan kejadian terbanyak.
                     
                     - **Perbandingan**: Perbedaan antar area menunjukkan disparitas tingkat keamanan.
+                    
+                    Hasil analisis menunjukkan bahwa tingkat kriminalitas di wilayah tersebut mengalami penurunan dari tahun 2020 hingga 2024. Namun, terdapat beberapa area dengan tingkat kriminalitas yang tinggi dan jenis kejahatan yang perlu diprioritaskan untuk penanganannya.
                     '''
     st.info(stringInfo7)
