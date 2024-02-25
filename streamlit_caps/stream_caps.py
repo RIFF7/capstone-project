@@ -202,7 +202,7 @@ with analisa_col2:
     string3 = '''
                 1. **Trend**:
                 - Jumlah kriminalitas (baik laporan maupun kejadian) relatif stabil dari bulan ke bulan, tanpa fluktuasi signifikan.
-                - Polanya serupa: meningkat di awal tahun, mencapai puncak di pertengahan tahun, dan turun di akhir tahun.
+                - Polanya serupa, meningkat di awal tahun mencapai puncak di pertengahan tahun, dan turun di akhir tahun.
                 
                 2. **Perbedaan Kecil**:
                 - Terdapat perbedaan kecil dalam jumlah antara bulan laporan dan bulan kejadian, namun tidak signifikan
